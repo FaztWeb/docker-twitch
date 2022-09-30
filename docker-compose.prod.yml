@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  web:
+    image: node:18
+    container_name: web
+    build: .
+    ports:
+      - 3000:3000
+    command: bash -c 'npm i && npm start'
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    container_name: mymongo
+    ports:
+      - 27017:27017
+    logging:
+      driver: none
+  sql:
+    image: mysql
+    container_name: mymysql
+    ports:
+      - 3306:3306
+    logging:
+      driver: none
+    environment:
+      - MYSQL_ROOT_PASSWORD=faztpassword
+      - MYSQL_DATABASE=faztdb
